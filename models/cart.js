@@ -9,7 +9,7 @@ const p = path.join(
 
 module.exports = class Cart {
   static addProduct(id, productPrice) {
-    // Fetch previous cart
+    // Fetch the previous cart
     fs.readFile(p, (err, fileContent) => {
       let cart = { products: [], totalPrice: 0 };
       if (!err) {
@@ -20,10 +20,8 @@ module.exports = class Cart {
         prod => prod.id === id
       );
       const existingProduct = cart.products[existingProductIndex];
-
       let updatedProduct;
-
-      // Add new product / increase quantity
+      // Add new product/ increase quantity
       if (existingProduct) {
         updatedProduct = { ...existingProduct };
         updatedProduct.qty = updatedProduct.qty + 1;
@@ -47,11 +45,9 @@ module.exports = class Cart {
       }
       const updatedCart = { ...JSON.parse(fileContent) };
       const product = updatedCart.products.find(prod => prod.id === id);
-
       if (!product) {
         return;
       }
-
       const productQty = product.qty;
       updatedCart.products = updatedCart.products.filter(
         prod => prod.id !== id
